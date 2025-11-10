@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <title>LMS SD Nasional</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>LEARNING MANAGEMENT SYSTEM</h1>
+    <h2>SDN 1 INDONESIA</h2>
+  </header>
+
+  <nav>
+    <div class="nav-left">
+      <a href="#" onclick="showPage('beranda')">Beranda</a>
+      <a href="#" onclick="showKelasList('materi')">Materi</a>
+      <a href="#" onclick="showKelasList('tugas')">Tugas</a>
+      <a href="#" onclick="showPage('pengumuman')">Pengumuman</a>
+    </div>
+    <div class="nav-right">
+      <span id="userGreeting" style="margin-right:10px; font-weight:bold; color:#0056d2;"></span>
+      <button id="authButton" onclick="handleAuth()">Login</button>
+    </div>
+  </nav>
+
+  <!-- 🏠 BERANDA -->
+  <main id="beranda" class="page active">
+    <h2 style="color:#0056d2;">Pilih Kelas</h2>
+    <div class="kelas-container">
+      <div class="kelas-card"><h3>Kelas 1</h3><button onclick="showMapel(1, 'beranda')">Lihat Mapel</button></div>
+      <div class="kelas-card"><h3>Kelas 2</h3><button onclick="showMapel(2, 'beranda')">Lihat Mapel</button></div>
+      <div class="kelas-card"><h3>Kelas 3</h3><button onclick="showMapel(3, 'beranda')">Lihat Mapel</button></div>
+      <div class="kelas-card"><h3>Kelas 4</h3><button onclick="showMapel(4, 'beranda')">Lihat Mapel</button></div>
+      <div class="kelas-card"><h3>Kelas 5</h3><button onclick="showMapel(5, 'beranda')">Lihat Mapel</button></div>
+      <div class="kelas-card"><h3>Kelas 6</h3><button onclick="showMapel(6, 'beranda')">Lihat Mapel</button></div>
+    </div>
+    <div id="beranda-content"></div>
+  </main>
+
+  <!-- 📚 MATERI -->
+  <main id="materi-kelas" class="page">
+    <h2 style="color:#0056d2;">Pilih Kelas untuk Materi</h2>
+    <div class="kelas-container">
+      <div class="kelas-card"><h3>Kelas 1</h3><button onclick="showMapel(1, 'materi')">Lihat Materi</button></div>
+      <div class="kelas-card"><h3>Kelas 2</h3><button onclick="showMapel(2, 'materi')">Lihat Materi</button></div>
+      <div class="kelas-card"><h3>Kelas 3</h3><button onclick="showMapel(3, 'materi')">Lihat Materi</button></div>
+      <div class="kelas-card"><h3>Kelas 4</h3><button onclick="showMapel(4, 'materi')">Lihat Materi</button></div>
+      <div class="kelas-card"><h3>Kelas 5</h3><button onclick="showMapel(5, 'materi')">Lihat Materi</button></div>
+      <div class="kelas-card"><h3>Kelas 6</h3><button onclick="showMapel(6, 'materi')">Lihat Materi</button></div>
+    </div>
+  </main>
+
+  <main id="materi" class="page">
+    <div id="materi-content"></div>
+  </main>
+
+  <!-- 📢 PENGUMUMAN -->
+  <main id="pengumuman" class="page">
+    <h2>Pengumuman Sekolah</h2>
+    <ul style="text-align:left; display:inline-block;">
+      <li>📢 Libur Nasional: 10 November (Hari Pahlawan)</li>
+      <li>🎓 Acara Perwalian Orang Tua: 15 November di Aula Sekolah</li>
+      <li>🏫 Kegiatan Jumat Bersih: Setiap Jumat pukul 07.00</li>
+    </ul>
+  </main>
+
+  <footer>
+    &copy; 2025 LMS SD Nasional - Semua Hak Dilindungi
+  </footer>
+
+  <!-- ✅ LOGIN/LOGOUT SCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", updateAuthStatus);
+
+    function updateAuthStatus() {
+      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+      const username = localStorage.getItem("username");
+      const authButton = document.getElementById("authButton");
+      const userGreeting = document.getElementById("userGreeting");
+
+      if (isLoggedIn) {
+        authButton.textContent = "Logout";
+        userGreeting.textContent = `Halo, ${username || "Admin"}!`;
+      } else {
+        authButton.textContent = "Login";
+        userGreeting.textContent = "";
+      }
+    }
+
+    function handleAuth() {
+      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+
+      if (isLoggedIn) {
+        // Logout
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("username");
+        alert("Anda telah logout.");
+        updateAuthStatus();
+      } else {
+        // Pergi ke halaman login
+        window.location.href = "login.html";
+      }
+    }
+
+    // Fungsi ini hanya dipakai oleh login.html
+    function validateLogin() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+
+      if (user === "admin" && pass === "1234") {
+        alert("Login berhasil!");
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", user);
+        window.location.href = "index.html";
+      } else {
+        alert("Nama pengguna atau kata sandi salah.");
+      }
+
+      return false;
+    }
+  </script>
+
+  <script src="main.js"></script>
+</body>
+</html>

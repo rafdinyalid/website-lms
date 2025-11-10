@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - LMS SD Bojong Santos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <header>
+            <h1>LEARNING MANAGEMENT SYSTEM</h1>
+            <h2>SD Bojong Santos</h2>
+        </header>
+
+        <!-- Konten Login -->
+        <div class="login-container">
+            <form class="login-box" onsubmit="return validateLogin()">
+                <h2>Login ke Akun Anda</h2>
+                <input type="text" id="username" placeholder="Nama Pengguna" required>
+                <input type="password" id="password" placeholder="Kata Sandi" required>
+                <button type="submit">Masuk</button>
+                <a href="index.html" class="back">← Kembali ke Beranda</a>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            &copy; 2025 LMS SD Bojong Santos — Semua Hak Dilindungi
+        </footer>
+
+    </div>
+
+    <script>
+        // 🔹 Daftar akun yang diizinkan login
+        const accounts = [
+            { username: "admin", password: "1234" },
+            { username: "guru", password: "5678" },
+            { username: "siswa1", password: "abcd" },
+            { username: "siswa2", password: "efgh" }
+        ];
+
+        // 🔹 Fungsi untuk validasi login
+        function validateLogin() {
+            const user = document.getElementById("username").value.trim();
+            const pass = document.getElementById("password").value.trim();
+
+            // Cek apakah ada akun yang cocok
+            const found = accounts.find(acc => acc.username === user && acc.password === pass);
+
+            if (found) {
+                alert("Login berhasil! Selamat datang, " + user + "!");
+                localStorage.setItem("loggedIn", "true");
+                localStorage.setItem("username", user);
+                window.location.href = "index.html"; // pindah ke halaman utama
+            } else {
+                alert("Nama pengguna atau kata sandi salah.");
+            }
+
+            return false; // mencegah reload halaman
+        }
+
+        // 🔹 Jika sudah login, langsung arahkan ke index agar tidak login lagi
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("loggedIn") === "true") {
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+
+</body>
+
+</html>
